@@ -1,0 +1,23 @@
+
+body{
+  margin: 0 auto;
+}
+
+.layer{
+  display: table;
+}
+
+#title{
+  margin-top: 50px;
+  text-align: center;
+  font-size: 60px;
+}
+
+#toybox td{
+  padding: 0;
+}
+#toybox{
+  margin: 50px auto;
+  border: 2px solid black;
+  width: 1000px;
+}
