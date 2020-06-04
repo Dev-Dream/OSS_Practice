@@ -2,28 +2,36 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 
-var app = http.createServer(function(request,response){
-    var _url = request.url;
-    var querydata = url.parse(_url, true).query;
-    var pathname = url.parse(_url, true).pathname;
-    var id = querydata.id;
+function checkURL(id) {
+    if (id === undefined) return 0;
+    if (1 <= id && id <= 4) return 1;
+    return 2;
+}
+
+function getTitle(id) {
+    var checker = checkURL(id);
+
+    var title = "애국가 닷컴";
+    if (checker === 0) return title;
+    if (checker === 1) return title + ` - ${id}절`;
+    return "404 not found";
+}
+
+function getFileDirectory(id) {
+    var checker = checkURL(id);
     
-    if (id === undefined) id = 0;
+    var fileDirecotry = "data/";
+    if (checker === 0) return fileDirecotry + "welcome/index";
+    if (checker === 1) return fileDirecotry + `original/${id}`;
+    return fileDirecotry + "error/404";
+}
 
-    var sub = "";
-    var file = "index";
-    if (1 <= id && id <= 4) {
-        sub = ` - ${id}절`;
-        file = id;
-    }
-
-    if (pathname === '/') {
-        fs.readFile(`data/${file}`, "utf8", function(err, body){
-            var tpl = 
+function getTemplate(title, body) {
+    var tpl = 
             `<!DOCTYPE html>
             <html>
                 <head>
-                    <title>애국가 닷컴${sub}</title>
+                    <title>${title}</title>
                     <meta charset="utf-8" />
                 </head>
                 <body>
@@ -37,7 +45,22 @@ var app = http.createServer(function(request,response){
                     ${body}
                 </body>
             </html>`;
+    return tpl;
+}
+
+
+var app = http.createServer(function(request,response){
+    var _url = request.url;
+    var querydata = url.parse(_url, true).query;
+    var pathname = url.parse(_url, true).pathname;
+    var id = querydata.id;
+
+    var title = getTitle(id);
+    var fileDirecotry = getFileDirectory(id);
+    if (pathname === '/') {
+        fs.readFile(fileDirecotry, "utf8", function(err, body){
             response.writeHead(200);
+            var tpl = getTemplate(title, body);
             response.end(tpl);
         })
     }
