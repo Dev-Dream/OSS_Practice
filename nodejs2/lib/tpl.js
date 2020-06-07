@@ -22,7 +22,7 @@ module.exports = {
         var rtn_string = "<ul>";
         var i = 0;
         while (i < problems.length) {
-            rtn_string = rtn_string + `<li><a href="/?id=${problems[i].id}">${problems[i].id}</a></li>`
+            rtn_string = rtn_string + `<li><a href="/problem/${problems[i].id}">${problems[i].id}</a></li>`
             i = i + 1;
         }
         return rtn_string + "</ul>";

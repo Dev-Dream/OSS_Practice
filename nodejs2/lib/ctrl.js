@@ -4,10 +4,10 @@ module.exports = {
     },
 
     update(id) {
-        return `<a href="/update?id=${id}">문제 수정</a>`;
+        return `<a href="/update/${id}">문제 수정</a>`;
     },
 
     delete(id) {
-        return `<form action="/delete_process" method="post"><input type="hidden" name="problem" value="${id}"><input type="submit" value="삭제"></form></p>`
+        return `<form action="/delete" method="post"><input type="hidden" name="problem" value="${id}"><input type="submit" value="삭제"></form></p>`
     }
 }

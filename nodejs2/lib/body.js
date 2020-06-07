@@ -8,7 +8,7 @@ module.exports = {
         if (problem[0].hint != "") {
             dft = dft + '<br>';
             if (hint != 1) {
-                dft = dft + `<p> <form action="/"><input type="hidden" name="id" value="${problem[0].id}"><input type="hidden" name="hint" value="1"><input type="submit" value="힌트 보기"></form></p>`;
+                dft = dft + `<p><a href="/problem/${problem[0].id}/hint">힌트 보기</a></p>`;
             }
             else {
                 dft = dft + `<p>   ${problem[0].hint}</p>`;
@@ -19,7 +19,7 @@ module.exports = {
 
     create() {
         return `<h2>문제 추가</h2>
-        <form action="/create_process" method="post">
+        <form action="/create" method="post">
         <p>
             <input type="number" name="problem" placeholder="BOJ problem" min="1000" max="19089">
         </p>
@@ -35,7 +35,7 @@ module.exports = {
 
     update(problem) {
         return `<h2>${problem[0].id}</h2>
-        <form action="/update_process" method="post">
+        <form action="/update" method="post">
         </h2><a href="https://www.acmicpc.net/problem/${problem[0].id}">문제 링크</a><br>
         <p>
             <input type="hidden" name="problem" value="${problem[0].id}">
